@@ -25,15 +25,20 @@ public interface Settings {
         SmartBoolean SUPERSTRUCTURE = new SmartBoolean("Enables Subsystems/Superstructure Is Enabled", true);
     }
 
-    public interface Intake_Shooter {
-        double INTAKE_SPEED = 0.5;
-        double OUTTAKE_SPEED = -0.5;
-        double SHOOT_SPEED = 1;
-    }
+    public interface Superstructure {
+        boolean intakeShooterInverted = false;
+        boolean indexerInverted = false;
 
-    public interface Indexer {
-        double INTAKE_OUTTAKE_SPEED = 1.0;
-        double SHOOT_SPEED = -1.0;
+        public interface Intake_Shooter {
+            double INTAKE_SPEED = 0.5;
+            double OUTTAKE_SPEED = -0.5;
+            double SHOOT_SPEED = 1;
+        }
+
+        public interface Indexer {
+            double INTAKE_OUTTAKE_SPEED = 1.0;
+            double SHOOT_SPEED = -1.0;
+        }
     }
 
     public interface Swerve {
@@ -89,7 +94,7 @@ public interface Settings {
         }
     }
 
-        public interface Driver {
+    public interface Driver {
         public interface Drive {
             SmartNumber DEADBAND = new SmartNumber("Driver Settings/Drive/Deadband", 0.05);
 
@@ -109,7 +114,7 @@ public interface Settings {
             SmartNumber MAX_TELEOP_TURN_SPEED = new SmartNumber("Driver Settings/Turn/Max Turn Speed (rad/s)", Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S);
             SmartNumber MAX_TELEOP_TURN_ACCEL = new SmartNumber("Driver Settings/Turn/Max Turn Accel (rad/s^2)", Swerve.Constraints.MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
-    }
-   
-
+    }  
 }
+
+

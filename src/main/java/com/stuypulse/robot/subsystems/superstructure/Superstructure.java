@@ -16,9 +16,9 @@ public abstract class Superstructure extends SubsystemBase {
     }
 
     public enum SuperstructureState {
-        INTAKING(Settings.Intake_Shooter.INTAKE_SPEED, Settings.Indexer.INTAKE_OUTTAKE_SPEED),
-        OUTTAKING(Settings.Intake_Shooter.OUTTAKE_SPEED, Settings.Indexer.INTAKE_OUTTAKE_SPEED),
-        SHOOTING(Settings.Intake_Shooter.SHOOT_SPEED, Settings.Indexer.SHOOT_SPEED),
+        INTAKING(Settings.Superstructure.Intake_Shooter.INTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_OUTTAKE_SPEED),
+        OUTTAKING(Settings.Superstructure.Intake_Shooter.OUTTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_OUTTAKE_SPEED),
+        SHOOTING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED, Settings.Superstructure.Indexer.SHOOT_SPEED),
         STOP(0, 0);
 
         private Number main_wheels_speed;
@@ -38,7 +38,7 @@ public abstract class Superstructure extends SubsystemBase {
         }
     }
 
-    private SuperstructureState state;
+    protected SuperstructureState state;
 
     protected Superstructure() {
         this.state = state.STOP;
