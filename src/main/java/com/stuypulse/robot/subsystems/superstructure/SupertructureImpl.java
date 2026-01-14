@@ -24,6 +24,8 @@ public class SupertructureImpl extends Superstructure {
         this.IndexerMotor = new SparkMax(Ports.Superstructure.INDEXER_MOTOR, MotorType.kBrushed);
         SparkBaseConfig indexerMotorConfig = new SparkMaxConfig().inverted(Settings.Superstructure.indexerInverted).idleMode(IdleMode.kBrake);
         IndexerMotor.configure(indexerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        shooterAtTargetVelocity = (Math.abs(IntakeShootMotor.getAbsoluteEncoder().getVelocity() - state.getMainWheelsSpeed()) < Settings.Superstructure.Intake_Shooter.SHOOT_TOLERANCE_RPM);
     }
 
     private void setMotorsBasedOnState() {

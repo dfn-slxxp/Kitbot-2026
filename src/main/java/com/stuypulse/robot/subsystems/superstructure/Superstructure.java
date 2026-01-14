@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class Superstructure extends SubsystemBase {
     public static final Superstructure instance;
 
+    public static boolean shooterAtTargetVelocity = false;
+
     static {
         instance = new SupertructureImpl();
     }
@@ -18,6 +20,7 @@ public abstract class Superstructure extends SubsystemBase {
     public enum SuperstructureState {
         INTAKING(Settings.Superstructure.Intake_Shooter.INTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_OUTTAKE_SPEED),
         OUTTAKING(Settings.Superstructure.Intake_Shooter.OUTTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_OUTTAKE_SPEED),
+        PREPARING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED, 0),
         SHOOTING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED, Settings.Superstructure.Indexer.SHOOT_SPEED),
         STOP(0, 0);
 

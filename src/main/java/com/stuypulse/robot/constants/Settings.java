@@ -33,6 +33,8 @@ public interface Settings {
             double INTAKE_SPEED = 0.5;
             double OUTTAKE_SPEED = -0.5;
             double SHOOT_SPEED = 1;
+            
+            double SHOOT_TOLERANCE_RPM = 50.0;
         }
 
         public interface Indexer {

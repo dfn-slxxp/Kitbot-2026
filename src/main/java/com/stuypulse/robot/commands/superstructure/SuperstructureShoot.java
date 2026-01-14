@@ -16,6 +16,6 @@ public class SuperstructureShoot extends InstantCommand {
 
     @Override
     public void initialize() {
-        superstructure.setState(SuperstructureState.SHOOTING);
+        superstructure.setState(Superstructure.shooterAtTargetVelocity ? SuperstructureState.SHOOTING : SuperstructureState.PREPARING);
     }
 }
