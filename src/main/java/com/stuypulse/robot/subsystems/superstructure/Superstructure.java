@@ -44,7 +44,7 @@ public abstract class Superstructure extends SubsystemBase {
     protected SuperstructureState state;
 
     protected Superstructure() {
-        this.state = state.STOP;
+        this.state = SuperstructureState.STOP;
     }
 
     public SuperstructureState getState() {
