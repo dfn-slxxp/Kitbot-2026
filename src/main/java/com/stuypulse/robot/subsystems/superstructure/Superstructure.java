@@ -10,7 +10,7 @@ public abstract class Superstructure extends SubsystemBase {
     public static boolean shooterAtTargetVelocity = false;
 
     static {
-        instance = new SupertructureImpl();
+        instance = new SuperstructureImpl();
     }
 
     public static Superstructure getInstance() {
