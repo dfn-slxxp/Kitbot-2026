@@ -1,16 +1,10 @@
 package com.stuypulse.robot.subsystems.superstructure;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.stuypulse.robot.constants.Motors.TalonFXConfig;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
@@ -19,8 +13,6 @@ public class SuperstructureImpl extends Superstructure {
     
     private final TalonFX IntakeShootMotor;
     private final SparkMax IndexerMotor;
-
-    private boolean shooterAtTargetVelocity;
     
     public SuperstructureImpl() {
         super();
