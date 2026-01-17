@@ -4,9 +4,6 @@ import com.stuypulse.robot.subsystems.superstructure.Superstructure;
 import com.stuypulse.robot.subsystems.superstructure.Superstructure.SuperstructureState;
 
 public class SuperstructureShoot extends SuperstructureSetState {
-    
-    private Superstructure superstructure;
-
     public SuperstructureShoot() {
         super(Superstructure.shooterAtTargetVelocity ? SuperstructureState.SHOOTING : SuperstructureState.PREPARING);
     }
