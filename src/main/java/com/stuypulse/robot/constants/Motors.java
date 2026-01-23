@@ -1,5 +1,5 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/************************ PROJECT KITBOT ************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
@@ -40,10 +40,11 @@ public interface Motors {
             .withCurrentLimitAmps(80)
             .withRampRate(0.25)
             .withNeutralMode(NeutralModeValue.Brake)
+            .withPIDConstants(10.0, 0, 0.5, 0)
+            .withFFConstants(0.1, 0.2, 0, 0)
             .withInvertedValue(InvertedValue.Clockwise_Positive);
 
-        
-        SparkBaseConfig indexerMotorConfig = new SparkMaxConfig().inverted(Settings.Superstructure.indexerInverted).idleMode(IdleMode.kBrake);
+        SparkBaseConfig indexerMotorConfig = new SparkMaxConfig().inverted(false).idleMode(IdleMode.kBrake);
     }
 
     /** Classes to store all of the values a motor needs */

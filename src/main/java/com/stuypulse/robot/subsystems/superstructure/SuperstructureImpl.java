@@ -1,6 +1,7 @@
 package com.stuypulse.robot.subsystems.superstructure;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -18,8 +19,6 @@ public class SuperstructureImpl extends Superstructure {
     private final SparkMax indexMotor;
     
     public SuperstructureImpl() {
-        super();
-        
         intakeShooterMotor = new TalonFX(Ports.Superstructure.INTAKE_SHOOTER_MOTOR, "Swerve Drive Drive");
         Motors.Superstructure.intakeShooterMotorConfig.configure(intakeShooterMotor);  
         
@@ -27,18 +26,37 @@ public class SuperstructureImpl extends Superstructure {
         indexMotor.configure(Motors.Superstructure.indexerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    public boolean atTargetVelocity() {
+        double shooterVel = intakeShooterMotor.getVelocity().getValueAsDouble();
+        double targetVel = getState().getIndexerTargetSpeed();
+
+        return Math.abs(shooterVel - targetVel) < Settings.Superstructure.Intake_Shooter.SHOOT_TOLERANCE_RPM;
+    }
 
     private void setMotorsBasedOnState() {
-        intakeShooterMotor.setControl(new DutyCycleOut(state.getMainWheelsSpeed()));
-        indexMotor.set(state.getIndexerSpeed());
+        if (getState() == SuperstructureState.SHOOTING || getState() == SuperstructureState.PREPARING) {
+            intakeShooterMotor.setControl(new VelocityVoltage(getState().getMainWheelsTargetSpeed() / 60.0));
+        } else {
+            intakeShooterMotor.setControl(new DutyCycleOut(getState().getMainWheelsTargetSpeed()));
+        }
+
+        indexMotor.set(getState().getIndexerTargetSpeed());
     }
 
     @Override
     public void periodic() {
-        setMotorsBasedOnState();
-        shooterAtTargetVelocity = (Math.abs(intakeShooterMotor.getVelocity().getValueAsDouble() - state.getMainWheelsSpeed()) <= Settings.Superstructure.Intake_Shooter.SHOOT_TOLERANCE_RPM);
+        if (Settings.EnabledSubsystems.SUPERSTRUCTURE.get()) {
+            setMotorsBasedOnState();
+        } else {
+            intakeShooterMotor.setVoltage(0);
+            indexMotor.setVoltage(0);
+        }
+
         SmartDashboard.putString("SuperStructure/State", getState().toString());
-        SmartDashboard.putNumber("SuperStructure/Main Wheel/Speed", getState().getMainWheelsSpeed());
-        SmartDashboard.putNumber("SuperStructure/Indexer/Speed", getState().getIndexerSpeed());
+        SmartDashboard.putNumber("SuperStructure/Main Wheels Target Speed", getState().getMainWheelsTargetSpeed());
+        SmartDashboard.putNumber("SuperStructure/Indexer Target Speed", getState().getIndexerTargetSpeed());
+
+        SmartDashboard.putNumber("SuperStructure/Main Wheels Current Speed (RPM)", intakeShooterMotor.getVelocity().getValueAsDouble() * 60.0);
+        SmartDashboard.putNumber("SuperStructure/Indexer Applied DutyCycle", indexMotor.getAppliedOutput());
     }
 }

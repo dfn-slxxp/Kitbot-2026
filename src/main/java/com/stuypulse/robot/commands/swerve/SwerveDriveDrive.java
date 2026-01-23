@@ -2,6 +2,7 @@ package com.stuypulse.robot.commands.swerve;
 
 import com.stuypulse.robot.constants.Settings.Driver.Drive;
 import com.stuypulse.robot.constants.Settings.Driver.Turn;
+import com.stuypulse.robot.constants.Settings.Swerve;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.math.SLMath;
@@ -32,8 +33,8 @@ public class SwerveDriveDrive extends Command {
             new VDeadZone(Drive.DEADBAND),
             x -> x.clamp(1),
             x -> x.pow(Drive.POWER.get()),
-            x -> x.mul(Drive.MAX_TELEOP_SPEED.get()),
-            new VRateLimit(Drive.MAX_TELEOP_ACCEL),
+            x -> x.mul(Swerve.Constraints.MAX_VELOCITY_M_PER_S),
+            new VRateLimit(Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED),
             new VLowPassFilter(Drive.RC)
         );
 
@@ -41,7 +42,7 @@ public class SwerveDriveDrive extends Command {
         .filtered(
             x -> SLMath.deadband(x, Turn.DEADBAND.get()),
             x -> SLMath.spow(x, Turn.POWER.get()),
-            x -> x * Turn.MAX_TELEOP_TURN_SPEED.get(),
+            x -> x * Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S,
             new LowPassFilter(Turn.RC)
         );
 

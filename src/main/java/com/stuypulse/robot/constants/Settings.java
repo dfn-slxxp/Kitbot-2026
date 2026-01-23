@@ -1,5 +1,5 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/************************ PROJECT KITBOT ************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
@@ -22,37 +22,26 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve Is Enabled", true);
-        SmartBoolean SUPERSTRUCTURE = new SmartBoolean("Enables Subsystems/Superstructure Is Enabled", true);
+        SmartBoolean SUPERSTRUCTURE = new SmartBoolean("Enabled Subsystems/Superstructure Is Enabled", true);
     }
-
     public interface Superstructure {
-        boolean intakeShooterInverted = false;
-        boolean indexerInverted = false;
-
         public interface Intake_Shooter {
-            SmartNumber INTAKE_SPEED = new SmartNumber("SuperStructure/Settings/Intake-Shooter/Intake Speed", -0.5);
-            SmartNumber OUTTAKE_SPEED = new SmartNumber("SuperStructure/Settings/Intake-Shooter/Outtake Speed",  0.5);
-            SmartNumber SHOOT_SPEED = new SmartNumber( "SuperStructure/Settings/Intake-Shooter/Shoot Speed", -0.5);
+            double INTAKE_SPEED = -0.5;
+            double OUTTAKE_SPEED = 0.5;
+            double SHOOT_SPEED_RPM = 3000.0;
             
-            double SHOOT_TOLERANCE_RPM = 500.0; // TODO: Find reasonable tolerance
+            double SHOOT_TOLERANCE_RPM = 50.0;
         }
 
         public interface Indexer {
-            SmartNumber INTAKE_SPEED = new SmartNumber("SuperStructure/Settings/Indexer/Intake Speed", -1.0);
-            SmartNumber OUTTAKE_SPEED = new SmartNumber("SuperStructure/Settings/Indexer/Outtake Speed", 1.0);
+            double INTAKE_SPEED = -1.0;
+            double OUTTAKE_SPEED = 1.0;
         }
     }
 
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
         double ROTATIONAL_DEADBAND_RAD_PER_S = 0.1;
-
-        public interface Encoder_Offsets {
-            double FRONT_LEFT_OFFSET = 1.757812;
-            double FRONT_RIGHT_OFFSET = 233.964844;
-            double BACK_LEFT_OFFSET = 62.359375;
-            double BACK_RIGHT_OFFSET = -51.152344;
-        }
         
         public interface Constraints {    
             double MAX_VELOCITY_M_PER_S = 4.3;
@@ -102,19 +91,12 @@ public interface Settings {
 
             SmartNumber RC = new SmartNumber("Driver Settings/Drive/RC", 0.05);
             SmartNumber POWER = new SmartNumber("Driver Settings/Drive/Power", 2);
-
-            SmartNumber MAX_TELEOP_SPEED = new SmartNumber("Driver Settings/Drive/Max Speed", Swerve.Constraints.MAX_VELOCITY_M_PER_S);
-            SmartNumber MAX_TELEOP_ACCEL = new SmartNumber("Driver Settings/Drive/Max Accleration", Swerve.Constraints.MAX_ACCEL_M_PER_S_SQUARED);
         }
-
         public interface Turn {
             SmartNumber DEADBAND = new SmartNumber("Driver Settings/Turn/Deadband", 0.05);
 
             SmartNumber RC = new SmartNumber("Driver Settings/Turn/RC", 0.05);
             SmartNumber POWER = new SmartNumber("Driver Settings/Turn/Power", 2);
-
-            SmartNumber MAX_TELEOP_TURN_SPEED = new SmartNumber("Driver Settings/Turn/Max Turn Speed (rad/s)", Swerve.Constraints.MAX_ANGULAR_VEL_RAD_PER_S);
-            SmartNumber MAX_TELEOP_TURN_ACCEL = new SmartNumber("Driver Settings/Turn/Max Turn Accel (rad/s^2)", Swerve.Constraints.MAX_ANGULAR_ACCEL_RAD_PER_S);
         }
     }  
 }

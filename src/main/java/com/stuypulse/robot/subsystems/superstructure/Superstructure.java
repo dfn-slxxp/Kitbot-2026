@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class Superstructure extends SubsystemBase {
     public static final Superstructure instance;
 
-    public static boolean shooterAtTargetVelocity = false;
-
     static {
         instance = new SuperstructureImpl();
     }
@@ -20,28 +18,28 @@ public abstract class Superstructure extends SubsystemBase {
     public enum SuperstructureState {
         INTAKING(Settings.Superstructure.Intake_Shooter.INTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_SPEED),
         OUTTAKING(Settings.Superstructure.Intake_Shooter.OUTTAKE_SPEED, Settings.Superstructure.Indexer.OUTTAKE_SPEED),
-        PREPARING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED, 0),
-        SHOOTING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED, Settings.Superstructure.Indexer.OUTTAKE_SPEED),
-        STOP(0, 0);
+        PREPARING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED_RPM, 0),
+        SHOOTING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED_RPM, Settings.Superstructure.Indexer.OUTTAKE_SPEED),
+        STOP(0.0, 0.0);
 
-        private Number main_wheels_speed;
-        private Number indexer_speed;
+        private double shooter_speed;
+        private double indexer_speed;
 
-        private SuperstructureState(Number main_wheels_speed, Number indexer_speed) {
-            this.main_wheels_speed = main_wheels_speed;
+        private SuperstructureState(double shooter_speed, double indexer_speed) {
+            this.shooter_speed = shooter_speed;
             this.indexer_speed = indexer_speed;
         }
 
-        public double getMainWheelsSpeed() {
-            return this.main_wheels_speed.doubleValue();
+        public double getMainWheelsTargetSpeed() {
+            return this.shooter_speed;
         }
 
-        public double getIndexerSpeed() {
-            return this.indexer_speed.doubleValue();
+        public double getIndexerTargetSpeed() {
+            return this.indexer_speed;
         }
     }
 
-    protected SuperstructureState state;
+    private SuperstructureState state;
 
     protected Superstructure() {
         this.state = SuperstructureState.STOP;
@@ -56,7 +54,5 @@ public abstract class Superstructure extends SubsystemBase {
     }
 
     @Override
-    public void periodic() {
-
-    }
+    public void periodic() {}
 }
