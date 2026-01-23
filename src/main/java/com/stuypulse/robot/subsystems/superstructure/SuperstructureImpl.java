@@ -26,6 +26,7 @@ public class SuperstructureImpl extends Superstructure {
         indexMotor.configure(Motors.Superstructure.indexerMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    @Override
     public boolean atTargetVelocity() {
         double shooterVel = intakeShooterMotor.getVelocity().getValueAsDouble();
         double targetVel = getState().getIndexerTargetSpeed();
