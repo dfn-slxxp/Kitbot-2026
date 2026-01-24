@@ -6,7 +6,9 @@
 package com.stuypulse.robot.constants;
 
 import com.ctre.phoenix6.CANBus;
+import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
+import com.stuypulse.robot.Robot;
 import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
@@ -42,6 +44,48 @@ public interface Settings {
     public interface Swerve {
         double MODULE_VELOCITY_DEADBAND_M_PER_S = 0.1;
         double ROTATIONAL_DEADBAND_RAD_PER_S = 0.1;
+
+        public interface Assist {
+
+            double ANGLE_DERIV_RC = 0.05;
+            double REDUCED_FF_DIST = 0.75;
+
+        }
+
+        public interface Motion {
+
+            SmartNumber MAX_VELOCITY = new SmartNumber("Swerve/Motion/Max Velocity", 2.5);
+            SmartNumber MAX_ACCELERATION = new SmartNumber("Swerve/Motion/Max Acceleration", 2.5);
+            SmartNumber MAX_ANGULAR_VELOCITY = new SmartNumber("Swerve/Motion/Max Angular Velocity", Units.degreesToRadians(540));
+            SmartNumber MAX_ANGULAR_ACCELERATION = new SmartNumber("Swerve/Motion/Max Angular Acceleration", Units.degreesToRadians(720));
+
+            PathConstraints DEFAULT_CONSTRAINTS =
+                new PathConstraints(
+                    MAX_VELOCITY.get(),
+                    MAX_ACCELERATION.get(),
+                    MAX_ANGULAR_VELOCITY.get(),
+                    MAX_ANGULAR_ACCELERATION.get());
+
+        }
+
+        public interface Turn {
+
+            // boolean INVERTED = true;
+
+            // double GEAR_RATIO = (150.0 / 7.0); // 21.4285714286
+        }
+
+        public interface Drive {
+
+            double L2 = ((50.0 / 14.0) * (17.0 / 27.0) * (45.0 / 15.0)); // 6.74607175
+            double L3 = ((50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0)); // 6.12244898
+            double L4 = ((50.0 / 16.0) * (16.0 / 28.0) * (45.0 / 15.0)); // 5.35714285714
+
+            // double WHEEL_DIAMETER = 4;
+            // double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+
+            // double GEAR_RATIO = Swerve.Drive.L4;
+        }
         
         public interface Constraints {    
             double MAX_VELOCITY_M_PER_S = 4.3;
@@ -68,7 +112,7 @@ public interface Settings {
             public interface Tolerances {
                 double X_TOLERANCE = Units.inchesToMeters(2.0); 
                 double Y_TOLERANCE = Units.inchesToMeters(2.0);
-                Rotation2d THETA_TOLERANCE = Rotation2d.fromDegrees(2.0);
+                SmartNumber THETA_TOLERANCE = new SmartNumber("Angle Tolerance", 2);
 
                 Pose2d POSE_TOLERANCE = new Pose2d(
                     Units.inchesToMeters(2.0), 
@@ -81,6 +125,7 @@ public interface Settings {
             }
 
             public interface Targets {
+
             }
         }
     }
