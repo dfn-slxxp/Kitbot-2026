@@ -16,10 +16,14 @@ import com.stuypulse.robot.commands.superstructure.WaitUntilAtTargetVelocity;
 import com.stuypulse.robot.commands.swerve.SwerveDriveAlignToHub;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveResetRotation;
+import com.stuypulse.robot.commands.turret.SetTurretPointAtHub;
+import com.stuypulse.robot.commands.turret.SetTurretZero;
+import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.superstructure.Superstructure;
 import com.stuypulse.robot.subsystems.superstructure.Superstructure.SuperstructureState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import com.stuypulse.robot.subsystems.turret.Turret;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -39,6 +43,7 @@ public class RobotContainer {
     // Subsystems
     public final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
     public final Superstructure superstructure = Superstructure.getInstance();
+    public final Turret turret = Turret.getInstance();
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -50,6 +55,8 @@ public class RobotContainer {
         configureDefaultCommands();
         configureButtonBindings();
         configureAutons();
+
+        SmartDashboard.putData("Field", Field.FIELD2D);
     }
 
     /****************/
@@ -86,6 +93,9 @@ public class RobotContainer {
 
         driver.getDPadUp()
             .onTrue(new SwerveResetRotation());
+
+        driver.getLeftButton().whileTrue(new SetTurretPointAtHub())
+            .onFalse(new SetTurretZero());
 
     }
 
