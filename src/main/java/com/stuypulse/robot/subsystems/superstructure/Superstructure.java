@@ -16,9 +16,9 @@ public abstract class Superstructure extends SubsystemBase {
     }
 
     public enum SuperstructureState {
-        INTAKING(Settings.Superstructure.Intake_Shooter.INTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_SPEED),
         OUTTAKING(Settings.Superstructure.Intake_Shooter.OUTTAKE_SPEED, Settings.Superstructure.Indexer.OUTTAKE_SPEED),
-        PREPARING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED_RPM, Settings.Superstructure.Indexer.INTAKE_SPEED),
+        INTAKING(Settings.Superstructure.Intake_Shooter.INTAKE_SPEED, Settings.Superstructure.Indexer.INTAKE_SPEED),
+        PREPARING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED_RPM, 0.0),
         SHOOTING(Settings.Superstructure.Intake_Shooter.SHOOT_SPEED_RPM, Settings.Superstructure.Indexer.OUTTAKE_SPEED),
         STOP(0.0, 0.0);
 
@@ -42,7 +42,7 @@ public abstract class Superstructure extends SubsystemBase {
     private SuperstructureState state;
 
     protected Superstructure() {
-        this.state = SuperstructureState.STOP;
+        this.state = SuperstructureState.INTAKING;
     }
 
     public SuperstructureState getState() {

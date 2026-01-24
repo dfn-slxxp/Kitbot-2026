@@ -8,6 +8,7 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.superstructure.SuperstructureIntake;
 import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
+// import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
 import com.stuypulse.robot.commands.superstructure.SuperstructureSetState;
 import com.stuypulse.robot.commands.superstructure.SuperstructureShoot;
 import com.stuypulse.robot.commands.superstructure.SuperstructureStop;
@@ -64,20 +65,21 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        driver.getLeftTriggerButton()
-            .onTrue(new SuperstructureIntake())
-            .onFalse(new SuperstructureStop());
-
         driver.getTopButton()
-            .onTrue(new SuperstructureSetState(SuperstructureState.PREPARING)
-                .andThen(new WaitUntilAtTargetVelocity())
-                .andThen(new WaitCommand(1))
-                .andThen(new SuperstructureShoot()))
-            .onFalse(new SuperstructureStop());
+            .whileTrue(new SuperstructureShoot())
+            .whileFalse(new SuperstructureIntake());
 
-        driver.getRightBumper()
-            .onTrue(new SuperstructureOuttake())
-            .onFalse(new SuperstructureStop());
+        // driver.getTopButton()
+        //     .onTrue(new SuperstructureSetState(SuperstructureState.PREPARING)
+        //         .andThen(new WaitUntilAtTargetVelocity())
+        //         .andThen(new WaitCommand(1))
+        //         .andThen(new SuperstructureShoot()))
+        //     .onFalse(new SuperstructureStop());
+
+        driver.getBottomButton()
+            .whileTrue(new SuperstructureOuttake())
+            .whileFalse(new SuperstructureIntake());
+
         driver.getDPadUp()
             .onTrue(new SwerveResetRotation());
 
