@@ -3,7 +3,16 @@ package com.stuypulse.robot.constants;
 import com.pathplanner.lib.config.PIDConstants;
 
 public class Gains {
-    
+    public interface Turret {
+        double kS = 0.0;
+        double kV = 0.2;
+        double kA = 0.01;
+
+        double kP = 1.0;
+        double kI = 0.0;
+        double kD = 0.05;
+    }
+
     public interface Shooter {
         public interface PID {
             double kP = 2.0;

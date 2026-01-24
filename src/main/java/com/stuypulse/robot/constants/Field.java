@@ -1,4 +1,3 @@
-/************************ PROJECT KITBOT *************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
@@ -151,7 +150,6 @@ public interface Field {
     public static Pose2d getAllianceHubPose() {
         return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
     }
-
     /* TRANSFORM FUNCTIONS */
     
     public static Pose3d transformToOppositeAlliance(Pose3d pose) {
