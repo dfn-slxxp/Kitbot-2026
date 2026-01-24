@@ -8,10 +8,12 @@ package com.stuypulse.robot.constants;
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.path.PathConstraints;
 import com.stuypulse.stuylib.network.SmartBoolean;
-import com.stuypulse.stuylib.network.SmartNumber;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 
 public interface Settings {
@@ -22,6 +24,8 @@ public interface Settings {
 
     public interface EnabledSubsystems {
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve Is Enabled", true);
+        SmartBoolean TURRET = new SmartBoolean("Enabled Subsystems/Turret Is Enabled", true);
+        SmartBoolean LIMELIGHT_TURRET = new SmartBoolean("Enabled Subsystems/Turret Limelight Is Enabled", true);
         SmartBoolean SUPERSTRUCTURE = new SmartBoolean("Enabled Subsystems/Superstructure Is Enabled", true);
     }
     public interface Superstructure {
@@ -37,6 +41,12 @@ public interface Settings {
             double INTAKE_SPEED = -1.0;
             double OUTTAKE_SPEED = 1.0;
         }
+    }
+
+    public interface Turret {
+        Rotation2d MAX_VEL = new Rotation2d(Units.degreesToRadians(600.0));
+        Rotation2d MAX_ACCEL = new Rotation2d(Units.degreesToRadians(600.0));
+        double TOLERANCE_DEG = 2.0;
     }
 
     public interface Swerve {
@@ -83,6 +93,10 @@ public interface Settings {
             public interface Targets {
             }
         }
+    }
+   
+    public interface Vision {
+        Vector<N3> MIN_STDDEVS = VecBuilder.fill(0.3, 0.3, 5);
     }
 
     public interface Driver {

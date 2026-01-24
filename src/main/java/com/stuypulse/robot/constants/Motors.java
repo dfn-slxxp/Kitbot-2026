@@ -5,6 +5,7 @@
 
 package com.stuypulse.robot.constants;
 
+import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
@@ -34,6 +35,18 @@ import com.revrobotics.spark.config.SparkMaxConfig;
  *  - The Open Loop Ramp Rate
  */
 public interface Motors {
+    public interface Turret {
+        TalonFXConfig MOTOR_CONFIG = new TalonFXConfig()
+        .withCurrentLimitAmps(40)
+        .withRampRate(0.25)
+        .withNeutralMode(NeutralModeValue.Brake)
+        .withFFConstants(Gains.Turret.kS, Gains.Turret.kV, Gains.Turret.kA, 0)
+        .withPIDConstants(Gains.Turret.kP, Gains.Turret.kI, Gains.Turret.kD, 0)
+        .withMotionProfile(Settings.Turret.MAX_VEL.getRotations(), Settings.Turret.MAX_ACCEL.getRotations())
+        .withSensorToMechanismRatio(2.80) // seems to be off by a bit
+        .withInvertedValue(InvertedValue.Clockwise_Positive)
+        .withContinuousWrap(true);
+    }
 
     public interface Superstructure {
         TalonFXConfig intakeShooterMotorConfig = new TalonFXConfig()
@@ -59,6 +72,7 @@ public interface Motors {
         private final OpenLoopRampsConfigs openLoopRampsConfigs = new OpenLoopRampsConfigs();
         private final CurrentLimitsConfigs currentLimitsConfigs = new CurrentLimitsConfigs();
         private final FeedbackConfigs feedbackConfigs = new FeedbackConfigs();
+        private final ClosedLoopGeneralConfigs closedLoopGeneralConfigs = new ClosedLoopGeneralConfigs();
         private final MotionMagicConfigs motionMagicConfigs = new MotionMagicConfigs();
 
         public void configure(TalonFX motor) {
@@ -217,6 +231,14 @@ public interface Motors {
             feedbackConfigs.SensorToMechanismRatio = sensorToMechanismRatio;
 
             configuration.withFeedback(feedbackConfigs);
+
+            return this;
+        }
+
+        public TalonFXConfig withContinuousWrap(boolean enabled) {
+            closedLoopGeneralConfigs.ContinuousWrap = enabled;
+
+            configuration.withClosedLoopGeneral(closedLoopGeneralConfigs);
 
             return this;
         }
