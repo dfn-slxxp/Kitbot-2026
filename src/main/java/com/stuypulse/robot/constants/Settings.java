@@ -1,5 +1,5 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/************************ PROJECT KITBOT ************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
@@ -26,10 +26,21 @@ public interface Settings {
         SmartBoolean SWERVE = new SmartBoolean("Enabled Subsystems/Swerve Is Enabled", true);
         SmartBoolean TURRET = new SmartBoolean("Enabled Subsystems/Turret Is Enabled", true);
         SmartBoolean LIMELIGHT_TURRET = new SmartBoolean("Enabled Subsystems/Turret Limelight Is Enabled", true);
+        SmartBoolean SUPERSTRUCTURE = new SmartBoolean("Enabled Subsystems/Superstructure Is Enabled", true);
     }
-
     public interface Superstructure {
-        
+        public interface Intake_Shooter {
+            double INTAKE_SPEED = 0.5;
+            double OUTTAKE_SPEED = 0.5;
+            double SHOOT_SPEED_RPM = 3000.0;
+            
+            double SHOOT_TOLERANCE_RPM = 50.0;
+        }
+
+        public interface Indexer {
+            double INTAKE_SPEED = -1.0;
+            double OUTTAKE_SPEED = 1.0;
+        }
     }
 
     public interface Turret {
@@ -87,4 +98,21 @@ public interface Settings {
     public interface Vision {
         Vector<N3> MIN_STDDEVS = VecBuilder.fill(0.3, 0.3, 5);
     }
+
+    public interface Driver {
+        public interface Drive {
+            SmartNumber DEADBAND = new SmartNumber("Driver Settings/Drive/Deadband", 0.05);
+
+            SmartNumber RC = new SmartNumber("Driver Settings/Drive/RC", 0.05);
+            SmartNumber POWER = new SmartNumber("Driver Settings/Drive/Power", 2);
+        }
+        public interface Turn {
+            SmartNumber DEADBAND = new SmartNumber("Driver Settings/Turn/Deadband", 0.05);
+
+            SmartNumber RC = new SmartNumber("Driver Settings/Turn/RC", 0.05);
+            SmartNumber POWER = new SmartNumber("Driver Settings/Turn/Power", 2);
+        }
+    }  
 }
+
+

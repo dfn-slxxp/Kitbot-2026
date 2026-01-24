@@ -1,6 +1,5 @@
-
-/************************ PROJECT MARY *************************/
-/* Copyright (c) 2025 StuyPulse Robotics. All rights reserved. */
+/************************ PROJECT KITBOT *************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved. */
 /* Use of this source code is governed by an MIT-style license */
 /* that can be found in the repository LICENSE file.           */
 /***************************************************************/
@@ -175,7 +174,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     );
 
     /* The SysId routine to test */
-    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineChassisTranslation;
+    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineModuleTranslation;
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.

@@ -1,5 +1,5 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/************************ PROJECT KITBOT ************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
@@ -21,6 +21,9 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 /*-
  * File containing all of the configurations that different motors require.
@@ -43,6 +46,18 @@ public interface Motors {
         .withSensorToMechanismRatio(2.80) // seems to be off by a bit
         .withInvertedValue(InvertedValue.Clockwise_Positive)
         .withContinuousWrap(true);
+    }
+
+    public interface Superstructure {
+        TalonFXConfig intakeShooterMotorConfig = new TalonFXConfig()
+                .withCurrentLimitAmps(80)
+                .withRampRate(0.25)
+                .withNeutralMode(NeutralModeValue.Brake)
+                .withInvertedValue(InvertedValue.CounterClockwise_Positive) // setting one motor inverted and the other                                                // inverted
+                .withPIDConstants(Gains.Shooter.PID.kP, Gains.Shooter.PID.kI, Gains.Shooter.PID.kD, 0)
+                .withFFConstants(Gains.Shooter.FF.kS, Gains.Shooter.FF.kV, Gains.Shooter.FF.kA, 0);
+
+        SparkBaseConfig indexerMotorConfig = new SparkMaxConfig().inverted(false).idleMode(IdleMode.kBrake);
     }
 
     /** Classes to store all of the values a motor needs */

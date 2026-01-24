@@ -1,5 +1,5 @@
-/************************ PROJECT PHIL ************************/
-/* Copyright (c) 2024 StuyPulse Robotics. All rights reserved.*/
+/************************ PROJECT KITBOT ************************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
 
@@ -16,7 +16,9 @@ public class DoNothingAuton extends SequentialCommandGroup {
 
     public DoNothingAuton() {
         addCommands(
-                /** Do a whole lot of nothing */
+                /** Do a whole lot of nothing 
+                 * thank you thank you thank you thank you
+                */
                 );
     }
 }
