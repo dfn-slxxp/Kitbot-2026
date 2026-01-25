@@ -12,12 +12,7 @@ import com.stuypulse.robot.constants.Constants;
 import com.stuypulse.robot.constants.Motors;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.constants.Settings;
-import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.util.HubUtil.FERRY_TARGET_POSITIONS;
-import com.stuypulse.robot.util.HubUtil;
 import com.stuypulse.robot.util.SysId;
-import com.stuypulse.stuylib.math.Vector2D;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -28,7 +23,6 @@ public class TurretImpl extends Turret {
     private CANcoder encoder1;
     private CANcoder encoder2;
     private boolean hasUsedAbsoluteEncoder;
-    private FERRY_TARGET_POSITIONS targetPosition;
     private Optional<Double> voltageOverride;
 
     public TurretImpl() {
@@ -50,43 +44,6 @@ public class TurretImpl extends Turret {
 
         hasUsedAbsoluteEncoder = false;
         voltageOverride = Optional.empty();
-        targetPosition = FERRY_TARGET_POSITIONS.LEFT_WALL;
-        // just default to this ?
-    }
-
-    @Override
-    public Rotation2d getPointAtHubAngle() {
-        Vector2D robot = new Vector2D(CommandSwerveDrivetrain.getInstance().getPose().getTranslation());
-        Vector2D hub = new Vector2D(HubUtil.getAllianceHubPose().getTranslation());
-        Vector2D robotToHub = hub.sub(robot).normalize();
-        Vector2D zeroVector = new Vector2D(0.0, 1.0);
-
-        // https://www.youtube.com/watch?v=_VuZZ9_58Wg
-        double crossProduct = zeroVector.x * robotToHub.y - zeroVector.y * robotToHub.x;
-        double dotProduct = zeroVector.dot(robotToHub);
-
-        Rotation2d targetAngle = Rotation2d.fromRadians(Math.atan2(crossProduct, dotProduct));
-
-        return targetAngle;
-    }
-
-    @Override
-    public Rotation2d getFerryAngle() {
-        Vector2D robot = new Vector2D(CommandSwerveDrivetrain.getInstance().getPose().getTranslation());
-        Vector2D robotToHub = robot
-                .sub(new Vector2D(targetPosition.getFerryTargetPose().getTranslation())).normalize();
-        Vector2D zeroVector = new Vector2D(0.0, 1.0);
-        // define this as a constant somewhere?
-
-        Rotation2d angle = Rotation2d
-                .fromDegrees(Math.acos(robotToHub.dot(zeroVector) / robotToHub.magnitude() * zeroVector.magnitude()));
-        return angle;
-    }
-
-    // confirm that the angle range is [0, 360)
-    @Override
-    public boolean atTargetAngle() {
-        return Math.abs(getTurretAngle().minus(getTargetAngle()).getDegrees() + 180.0) < Settings.Turret.TOLERANCE_DEG;
     }
 
     @Override

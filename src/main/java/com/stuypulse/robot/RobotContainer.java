@@ -8,12 +8,7 @@ package com.stuypulse.robot;
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
 import com.stuypulse.robot.commands.superstructure.SuperstructureIntake;
 import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
-// import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
-import com.stuypulse.robot.commands.superstructure.SuperstructureSetState;
 import com.stuypulse.robot.commands.superstructure.SuperstructureShoot;
-import com.stuypulse.robot.commands.superstructure.SuperstructureStop;
-import com.stuypulse.robot.commands.superstructure.WaitUntilAtTargetVelocity;
-import com.stuypulse.robot.commands.swerve.SwerveDriveAlignToHub;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveResetRotation;
 import com.stuypulse.robot.commands.turret.SetTurretPointAtHub;
@@ -21,7 +16,6 @@ import com.stuypulse.robot.commands.turret.SetTurretZero;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.superstructure.Superstructure;
-import com.stuypulse.robot.subsystems.superstructure.Superstructure.SuperstructureState;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.robot.subsystems.turret.Turret;
 import com.stuypulse.stuylib.input.Gamepad;
@@ -30,8 +24,6 @@ import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 public class RobotContainer {
@@ -77,8 +69,8 @@ public class RobotContainer {
             .whileTrue(new SuperstructureShoot())
             .whileFalse(new SuperstructureIntake());
 
-        driver.getLeftButton()
-            .whileTrue(new SwerveDriveAlignToHub());
+        // driver.getLeftButton()
+        //     .whileTrue(new SwerveDriveAlignToHub());
 
         // driver.getTopButton()
         //     .onTrue(new SuperstructureSetState(SuperstructureState.PREPARING)

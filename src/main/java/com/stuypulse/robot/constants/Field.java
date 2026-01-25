@@ -27,7 +27,24 @@ public interface Field {
     public static final Field2d FIELD2D = new Field2d();
 
     double WIDTH = Units.inchesToMeters(317.000); 
-    double LENGTH = Units.inchesToMeters(690.876);
+    double LENGTH = Units.inchesToMeters(651.200);
+
+    // Blue origin relative hub center coordinates
+    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(182.11), WIDTH / 2.0, new Rotation2d());
+    public final Pose2d redHubCenter = new Pose2d(LENGTH - Units.inchesToMeters(182.11), WIDTH / 2.0, Rotation2d.k180deg);
+
+    public static Pose2d getAllianceHubPose() {
+        return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
+    }
+
+    // 1.0 meters from driverstation wall and field wall
+    public final Pose2d leftFerryZone = new Pose2d(1.0, WIDTH - 1.0, new Rotation2d());
+    public final Pose2d rightFerryZone = new Pose2d(1.0, 1.0, new Rotation2d());
+
+    public static Pose2d getFerryZonePose(boolean isLeftFerryZone) {
+        Pose2d targetPose = isLeftFerryZone ? leftFerryZone : rightFerryZone;
+        return Robot.isBlue() ? targetPose : transformToOppositeAlliance(targetPose);
+    }
 
     /*** APRILTAGS ***/
 
@@ -145,11 +162,6 @@ public interface Field {
     public final int[] RED_HP_TAG_IDS = {13, 14};
     public final int[] BLUE_HP_TAG_IDS = {29, 30};
 
-    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(182.11), Units.inchesToMeters(WIDTH / 2.0), new Rotation2d());
-
-    public static Pose2d getAllianceHubPose() {
-        return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
-    }
     /* TRANSFORM FUNCTIONS */
     
     public static Pose3d transformToOppositeAlliance(Pose3d pose) {
