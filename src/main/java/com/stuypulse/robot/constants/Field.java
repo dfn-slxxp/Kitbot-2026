@@ -29,12 +29,11 @@ public interface Field {
     double WIDTH = Units.inchesToMeters(317.000); 
     double LENGTH = Units.inchesToMeters(651.200);
 
-    // Blue origin relative hub center coordinates
-    public final Pose2d blueHubCenter = new Pose2d(Units.inchesToMeters(182.11), WIDTH / 2.0, new Rotation2d());
-    public final Pose2d redHubCenter = new Pose2d(LENGTH - Units.inchesToMeters(182.11), WIDTH / 2.0, Rotation2d.k180deg);
+    // Alliance relative hub center coordinates
+    public final Pose2d hubCenter = new Pose2d(Units.inchesToMeters(182.11), WIDTH / 2.0, new Rotation2d());
 
     public static Pose2d getAllianceHubPose() {
-        return (Robot.isBlue() ? blueHubCenter : transformToOppositeAlliance(blueHubCenter));
+        return hubCenter;
     }
 
     // 1.0 meters from driverstation wall and field wall

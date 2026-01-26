@@ -11,6 +11,7 @@ import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
 import com.stuypulse.robot.commands.superstructure.SuperstructureShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveResetRotation;
+import com.stuypulse.robot.commands.turret.SetTurretFerry;
 import com.stuypulse.robot.commands.turret.SetTurretPointAtHub;
 import com.stuypulse.robot.commands.turret.SetTurretZero;
 import com.stuypulse.robot.constants.Field;
@@ -89,6 +90,9 @@ public class RobotContainer {
         driver.getLeftButton().whileTrue(new SetTurretPointAtHub())
             .onFalse(new SetTurretZero());
 
+
+        driver.getRightButton().whileTrue(new SetTurretFerry())
+            .onFalse(new SetTurretZero());
     }
 
     /**************/

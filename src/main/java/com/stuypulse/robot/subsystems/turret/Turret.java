@@ -77,12 +77,6 @@ public abstract class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Turret/Angle (Deg)", getTurretAngle().getDegrees());
-        SmartDashboard.putNumber("Hub/Hub X", Field.getAllianceHubPose().getX());
-        SmartDashboard.putNumber("Hub/Hub Y", Field.getAllianceHubPose().getY());
-
-        Field.FIELD2D.getObject("Red Hub Pose").setPose(Field.getAllianceHubPose());
-        Field.FIELD2D.getObject("Blue Hub Pose").setPose(Field.transformToOppositeAlliance(Field.getAllianceHubPose()));
-        
 
         if (Settings.DEBUG_MODE) {
             if (Settings.EnabledSubsystems.TURRET.get()) {
@@ -98,13 +92,24 @@ public abstract class Turret extends SubsystemBase {
         Vector2D robot = new Vector2D(CommandSwerveDrivetrain.getInstance().getPose().getTranslation());
         Vector2D target = new Vector2D(targetPose.getX(), targetPose.getY());
         Vector2D robotToTarget = target.sub(robot).normalize();
-        Vector2D zeroVector = Robot.isBlue() ? new Vector2D(1.0, 0.0) : new Vector2D(-1.0, 0.0); 
+        Vector2D zeroVector = new Vector2D(1.0, 0.0); // Alliance-relative
 
         // https://www.youtube.com/watch?v=_VuZZ9_58Wg
         double crossProduct = zeroVector.x * robotToTarget.y - zeroVector.y * robotToTarget.x;
         double dotProduct = zeroVector.dot(robotToTarget);
+        double angleRadians = Math.atan2(crossProduct, dotProduct);
 
-        Rotation2d targetAngle = Rotation2d.fromRadians(Math.atan2(crossProduct, dotProduct));
+        if (!Robot.isBlue()) {
+            angleRadians += Math.PI; // Flip target angle for red alliance
+
+            while (angleRadians < 0) angleRadians += 2 * Math.PI;
+            while (angleRadians >= 2 * Math.PI) angleRadians -= 2 * Math.PI;
+        }
+
+        SmartDashboard.putNumber("Turret/Robot to Target Vector X", robotToTarget.x);
+        SmartDashboard.putNumber("Turret/Robot to Target Vector Y", robotToTarget.y);
+
+        Rotation2d targetAngle = Rotation2d.fromRadians(angleRadians);
         return targetAngle;
     }
 }
