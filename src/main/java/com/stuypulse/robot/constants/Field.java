@@ -40,9 +40,12 @@ public interface Field {
     public final Pose2d leftFerryZone = new Pose2d(1.0, WIDTH - 1.0, new Rotation2d());
     public final Pose2d rightFerryZone = new Pose2d(1.0, 1.0, new Rotation2d());
 
-    public static Pose2d getFerryZonePose(boolean isLeftFerryZone) {
-        Pose2d targetPose = isLeftFerryZone ? leftFerryZone : rightFerryZone;
-        return Robot.isBlue() ? targetPose : transformToOppositeAlliance(targetPose);
+    public static Pose2d getFerryZonePose(Translation2d robot) { 
+        if (robot.getDistance(leftFerryZone.getTranslation()) > robot.getDistance(rightFerryZone.getTranslation())) {
+            return rightFerryZone;
+        } else {
+            return leftFerryZone;
+        }
     }
 
     /*** APRILTAGS ***/

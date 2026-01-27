@@ -2,6 +2,7 @@ package com.stuypulse.robot.subsystems.superstructure;
 
 import com.stuypulse.robot.constants.Settings;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public abstract class Superstructure extends SubsystemBase {
@@ -56,5 +57,8 @@ public abstract class Superstructure extends SubsystemBase {
     public abstract boolean atTargetVelocity();
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        SmartDashboard.putString("SuperStructure/State", state.name());
+        SmartDashboard.putString("States/SuperStructure", state.name());
+    }
 }

@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         SignalLogger.start();
 
-        alliance = Alliance.Blue;
+        // alliance = Alliance.Blue;
         // SignalLogger.setPath()
     }
 

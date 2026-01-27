@@ -45,7 +45,7 @@ public abstract class Turret extends SubsystemBase {
     public Rotation2d getTargetAngle() {
         return switch (getTurretState()) {
             case ZERO -> Robot.isBlue() ? new Rotation2d() : Rotation2d.fromDegrees(180.0); 
-            case FERRYING -> getFerryAngle(true);
+            case FERRYING -> getFerryAngle();
             case POINT_AT_HUB -> getPointAtHubAngle();
         };
     }
@@ -66,8 +66,9 @@ public abstract class Turret extends SubsystemBase {
         return getPointAtTargetAngle(Field.getAllianceHubPose());
     }
 
-    public Rotation2d getFerryAngle(boolean isLeftFerryZone) {
-        return getPointAtTargetAngle(Field.getFerryZonePose(isLeftFerryZone));
+    public Rotation2d getFerryAngle() {
+        Pose2d robot = CommandSwerveDrivetrain.getInstance().getPose();
+        return getPointAtTargetAngle(Field.getFerryZonePose(robot.getTranslation()));
     }
 
     public abstract Rotation2d getTurretAngle();
@@ -77,6 +78,8 @@ public abstract class Turret extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Turret/Angle (Deg)", getTurretAngle().getDegrees());
+        SmartDashboard.putString("Turret/State", state.name());
+        SmartDashboard.putString("States/Turret", state.name());
 
         if (Settings.DEBUG_MODE) {
             if (Settings.EnabledSubsystems.TURRET.get()) {
@@ -108,6 +111,8 @@ public abstract class Turret extends SubsystemBase {
 
         SmartDashboard.putNumber("Turret/Robot to Target Vector X", robotToTarget.x);
         SmartDashboard.putNumber("Turret/Robot to Target Vector Y", robotToTarget.y);
+        SmartDashboard.putNumber("Turret/Target Pose X", targetPose.getX());
+        SmartDashboard.putNumber("Turret/Target Pose Y", targetPose.getY());
 
         Rotation2d targetAngle = Rotation2d.fromRadians(angleRadians);
         return targetAngle;
