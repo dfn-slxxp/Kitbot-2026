@@ -1,7 +1,7 @@
-package com.stuypulse.robot.commands.superstructure;
+package com.stuypulse.robot.commands.oldsuperstructure;
 
-import com.stuypulse.robot.subsystems.superstructure.Superstructure;
-import com.stuypulse.robot.subsystems.superstructure.Superstructure.SuperstructureState;
+import com.stuypulse.robot.subsystems.oldsuperstructure.Superstructure;
+import com.stuypulse.robot.subsystems.oldsuperstructure.Superstructure.SuperstructureState;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 

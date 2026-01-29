@@ -1,6 +1,6 @@
-package com.stuypulse.robot.commands.superstructure;
+package com.stuypulse.robot.commands.oldsuperstructure;
 
-import com.stuypulse.robot.subsystems.superstructure.Superstructure;
+import com.stuypulse.robot.subsystems.oldsuperstructure.Superstructure;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;

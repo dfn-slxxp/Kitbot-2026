@@ -6,19 +6,12 @@
 package com.stuypulse.robot;
 
 import com.stuypulse.robot.commands.auton.DoNothingAuton;
-import com.stuypulse.robot.commands.superstructure.SuperstructureIntake;
-import com.stuypulse.robot.commands.superstructure.SuperstructureOuttake;
-import com.stuypulse.robot.commands.superstructure.SuperstructureShoot;
 import com.stuypulse.robot.commands.swerve.SwerveDriveDrive;
 import com.stuypulse.robot.commands.swerve.SwerveResetRotation;
-import com.stuypulse.robot.commands.turret.SetTurretFerry;
-import com.stuypulse.robot.commands.turret.SetTurretPointAtHub;
-import com.stuypulse.robot.commands.turret.SetTurretZero;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.superstructure.Superstructure;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
-import com.stuypulse.robot.subsystems.turret.Turret;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
 
@@ -35,8 +28,7 @@ public class RobotContainer {
 
     // Subsystems
     public final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-    public final Superstructure superstructure = Superstructure.getInstance();
-    public final Turret turret = Turret.getInstance();
+    // public final Superstructure superstructure = Superstructure.getInstance(); <- Old superstructure, implement it with akit
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -66,7 +58,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
 
-        driver.getTopButton()
+        driver.getTopButton()                                   // TODO: Implement with AKIT
                 .whileTrue(new SuperstructureShoot())
                 .whileFalse(new SuperstructureIntake());
 
@@ -80,18 +72,12 @@ public class RobotContainer {
         // .andThen(new SuperstructureShoot()))
         // .onFalse(new SuperstructureStop());
 
-        driver.getBottomButton()
+        driver.getBottomButton()                                 // TODO: Implement with AKIT
                 .whileTrue(new SuperstructureOuttake())
                 .whileFalse(new SuperstructureIntake());
 
         driver.getDPadUp()
                 .onTrue(new SwerveResetRotation());
-
-        driver.getLeftButton().whileTrue(new SetTurretPointAtHub())
-                .onFalse(new SetTurretZero());
-
-        driver.getRightButton().whileTrue(new SetTurretFerry())
-                .onFalse(new SetTurretZero());
     }
 
     /**************/

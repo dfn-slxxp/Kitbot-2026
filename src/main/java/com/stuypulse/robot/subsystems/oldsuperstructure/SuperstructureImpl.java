@@ -1,4 +1,4 @@
-package com.stuypulse.robot.subsystems.superstructure;
+package com.stuypulse.robot.subsystems.oldsuperstructure;
 
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityVoltage;
