@@ -14,6 +14,8 @@ import com.stuypulse.robot.commands.swerve.SwerveResetRotation;
 import com.stuypulse.robot.constants.Field;
 import com.stuypulse.robot.constants.Ports;
 import com.stuypulse.robot.subsystems.superstructure.OldSuperstructure;
+import com.stuypulse.robot.subsystems.superstructure.indexer.Indexer;
+import com.stuypulse.robot.subsystems.superstructure.indexer.IndexerIOReal;
 import com.stuypulse.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import com.stuypulse.stuylib.input.Gamepad;
 import com.stuypulse.stuylib.input.gamepads.AutoGamepad;
@@ -31,7 +33,7 @@ public class RobotContainer {
 
     // Subsystems
     public final CommandSwerveDrivetrain swerve = CommandSwerveDrivetrain.getInstance();
-    public final OldSuperstructure superstructure = OldSuperstructure.getInstance();
+    public final Indexer indexer = new Indexer(new IndexerIOReal());
 
     // Autons
     private static SendableChooser<Command> autonChooser = new SendableChooser<>();
